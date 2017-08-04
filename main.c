@@ -83,8 +83,10 @@ void UserInput(GtkButton *widget, gpointer data){
     f = gtk_button_get_label(widget);
     //convert to gint64
     i = g_ascii_strtoll(f,NULL,0);
+    //Add player token to game board
     openS[i-1] = 88;
     gtk_button_set_label(widget,"O");
+    //check for human win
     j = checkWin(HUPLAYER,openS);
     //if win print to console. if this happens email me.
     if(j == 1){printf("Holy Hell you beat the AI!\n");exit(0);}
@@ -137,27 +139,7 @@ int alphaBeta(int depth, int board[9],int mM){
         }
     }
     if(depth == 0)return 0;
-    //If terminal state is not found we will recurse Alpha Beta until we find a winning or losing combo
-    for(int i = 0;i<9;i++){
-        if(board[i] != 88 && board[i] != 79) {
-            //AI player Loop
-            if (mM == AIPLAYER) {
-                board[i] = 79;
-                bV += alphaBeta(depth - 1, board, 88);
-                board[i] = i;
-                if(bV > 0)return bV;
-            }else{          //Human player check.
-                board[i] = 88;
-                bV += alphaBeta(depth - 1, board, 79);
-                board[i] = i;
-                if(bV < 0)return bV;
-                board[i] = i;
-            }
-        }
-    }
-    return bV;
-}
-void placeAi(int b){
+    //If terminal state is not AI Player move to gameboard.
     openS[b] = 79;
     switch(b){
         case 0:
