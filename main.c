@@ -139,7 +139,28 @@ int alphaBeta(int depth, int board[9],int mM){
         }
     }
     if(depth == 0)return 0;
-    //If terminal state is not AI Player move to gameboard.
+    //If terminal state is not found we will recurse Alpha Beta until we find a winning or losing combo
+    for(int i = 0;i<9;i++){
+        if(board[i] != 88 && board[i] != 79) {
+            //AI player Loop
+            if (mM == AIPLAYER) {
+                board[i] = 79;
+                bV += alphaBeta(depth - 1, board, 88);
+                board[i] = i;
+                if(bV > 0)return bV;
+            }else{          //Human player check.
+                board[i] = 88;
+                bV += alphaBeta(depth - 1, board, 79);
+                board[i] = i;
+                if(bV < -10)return bV;
+                board[i] = i;
+            }
+        }
+    }
+    return bV;
+}
+void placeAi(int b){
+    //Add AI token to board.
     openS[b] = 79;
     switch(b){
         case 0:
