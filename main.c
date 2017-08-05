@@ -9,8 +9,6 @@
  *      GTK
  *      GLIB
  *
- *      NOTE: DO NOT PICK THE MIDDLE BUTTON OR AI WILL CRASH.
- *
  *    Websites for Learning Algos:
  *      https://en.wikipedia.org/wiki/Alpha-beta_pruning
  *      https://en.wikipedia.org/wiki/Minimax
@@ -43,7 +41,7 @@ GtkWidget *bR;
 
 //Global Vars
 int openS[9] = {1,2,3,4,5,6,7,8,9};
-int status = 9;
+int open = 9;
 const gchar *f;
 
 //Prototyped functions
@@ -69,7 +67,7 @@ int main(int argc, char *argv[]) {
     g_signal_connect(G_OBJECT(uR), "clicked", G_CALLBACK(UserInput), NULL);
     g_signal_connect(G_OBJECT(mR), "clicked", G_CALLBACK(UserInput), NULL);
     g_signal_connect(G_OBJECT(bR), "clicked", G_CALLBACK(UserInput), NULL);
-    if(status == 0){return 0;}
+    if(open == 0){return 0;}
     g_signal_connect(w, "destroy", G_CALLBACK(gtk_main_quit), NULL);
 
     gtk_main();
@@ -89,7 +87,11 @@ void UserInput(GtkButton *widget, gpointer data){
     //check for human win
     j = checkWin(HUPLAYER,openS);
     //if win print to console. if this happens email me.
-    if(j == 1){printf("Holy Hell you beat the AI!\n");exit(0);}
+    if(j == 1){
+        printf("Holy Hell you beat the AI!\n");
+        exit(0);
+    }
+    open -=1;
     ai();
 }
 void ai(){
@@ -114,17 +116,26 @@ void ai(){
                 break;
             }
             //if no winstate alphabeta the bestscore
-            tS = alphaBeta(status-1,openS,88);
+            tS = alphaBeta(open-1,openS,88);
             if(tS>bS){bMa = i;bS=tS;}
             openS[i] = i;
         }
     }
-    if(bMa > 20){printf("Tie.");exit(0);}
+    printf("bma = %d\n",bMa);
+    if(bMa > 9){bMa = 0;}
     //made place AI so it doesnt loop crowded. We all know how to assign variables.
     placeAi(bMa);
+    open -= 1;
+    if(open == 0){
+        printf("Game over Tie!\n");
+        exit(0);
+    }
     j = checkWin(AIPLAYER,openS);
     //print win for ai. if this happens you should feel really bad.
-    if(j == TRUE){status = 0;printf("HA! The AI won and you lost\n");exit(0);}
+    if(j == TRUE){
+        printf("HA! The AI won and you lost\n");
+        exit(0);
+    }
 }
 int alphaBeta(int depth, int board[9],int mM){
     int bV = 0;
