@@ -24,14 +24,15 @@ void activate_GTK(){
     bR = gtk_button_new_with_label("9");
 
     //Add buttons to grid
+    //ROW 1
     gtk_grid_attach(GTK_GRID(grid),uL,0,0,1,1);
     gtk_grid_attach_next_to(GTK_GRID(grid),uM,uL,GTK_POS_RIGHT,1,1);
     gtk_grid_attach_next_to(GTK_GRID(grid),uR,uM,GTK_POS_RIGHT,1,1);
-
+    //ROW 2
     gtk_grid_attach(GTK_GRID(grid),mL,0,1,1,1);
     gtk_grid_attach_next_to(GTK_GRID(grid),mM,mL,GTK_POS_RIGHT,1,1);
     gtk_grid_attach_next_to(GTK_GRID(grid),mR,mM,GTK_POS_RIGHT,1,1);
-
+    //ROW 3
     gtk_grid_attach(GTK_GRID(grid),bL,0,2,1,1);
     gtk_grid_attach_next_to(GTK_GRID(grid),bM,bL,GTK_POS_RIGHT,1,1);
     gtk_grid_attach_next_to(GTK_GRID(grid),bR,bM,GTK_POS_RIGHT,1,1);
@@ -76,4 +77,20 @@ void UserInput(GtkButton *widget, gpointer data){
     open -=1;
     if(open == 0)exit(0);
     ai();
+}
+void game_loop(){
+    gtk_widget_show_all(w);
+    g_signal_connect(G_OBJECT(uL), "clicked", G_CALLBACK(UserInput), NULL);
+    g_signal_connect(G_OBJECT(mL), "clicked", G_CALLBACK(UserInput), NULL);
+    g_signal_connect(G_OBJECT(bL), "clicked", G_CALLBACK(UserInput), NULL);
+    g_signal_connect(G_OBJECT(uM), "clicked", G_CALLBACK(UserInput), NULL);
+    g_signal_connect(G_OBJECT(mM), "clicked", G_CALLBACK(UserInput), NULL);
+    g_signal_connect(G_OBJECT(bM), "clicked", G_CALLBACK(UserInput), NULL);
+    g_signal_connect(G_OBJECT(uR), "clicked", G_CALLBACK(UserInput), NULL);
+    g_signal_connect(G_OBJECT(mR), "clicked", G_CALLBACK(UserInput), NULL);
+    g_signal_connect(G_OBJECT(bR), "clicked", G_CALLBACK(UserInput), NULL);
+
+    g_signal_connect(w, "destroy", G_CALLBACK(gtk_main_quit), NULL);
+
+    gtk_main();
 }

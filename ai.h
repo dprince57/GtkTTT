@@ -8,9 +8,6 @@
 #include <stdlib.h>
 #include <gtk/gtk.h>
 
-extern int openS[9];
-extern int open;
-
 void ai();
 void placeAi(int b);
 

@@ -10,21 +10,25 @@
 #define HUPLAYER 88
 #define AIPLAYER 79
 
-extern GtkWidget *uL;
-extern GtkWidget *uM;
-extern GtkWidget *uR;
-extern GtkWidget *mL;
-extern GtkWidget *mM;
-extern GtkWidget *mR;
-extern GtkWidget *bL;
-extern GtkWidget *bM;
-extern GtkWidget *bR;
+GtkWidget *uL;
+GtkWidget *uM;
+GtkWidget *uR;
+GtkWidget *mL;
+GtkWidget *mM;
+GtkWidget *mR;
+GtkWidget *bL;
+GtkWidget *bM;
+GtkWidget *bR;
 
-extern GtkWidget *w;
-extern const gchar *f;
+GtkWidget *w;
+const gchar *f;
+
+extern int openS[9];
+extern int open;
 
 int checkWin(int p,int b[9]);
 void activate_GTK();
 void UserInput(GtkButton *widget, gpointer data);
+void game_loop();
 
 #endif //GTKTTT_GAME_H
