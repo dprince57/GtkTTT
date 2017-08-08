@@ -9,7 +9,7 @@ void activate_GTK(){
     w = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     GtkWidget *grid = gtk_grid_new();
 
-    gtk_window_set_title(GTK_WINDOW(w),"Tic Tac Toe Scrub");
+    gtk_window_set_title(GTK_WINDOW(w),"Tic Tac Toe you can never beat");
     gtk_window_set_position(GTK_WINDOW(w), GTK_WIN_POS_CENTER);
 
     //Activate Buttons
@@ -22,6 +22,7 @@ void activate_GTK(){
     bL = gtk_button_new_with_label("7");
     bM = gtk_button_new_with_label("8");
     bR = gtk_button_new_with_label("9");
+    bottom = gtk_button_new_with_label("reset?");
 
     //Add buttons to grid
     //ROW 1
@@ -36,6 +37,8 @@ void activate_GTK(){
     gtk_grid_attach(GTK_GRID(grid),bL,0,2,1,1);
     gtk_grid_attach_next_to(GTK_GRID(grid),bM,bL,GTK_POS_RIGHT,1,1);
     gtk_grid_attach_next_to(GTK_GRID(grid),bR,bM,GTK_POS_RIGHT,1,1);
+    //Row 4
+    gtk_grid_attach(GTK_GRID(grid),bottom,0,3,0,0);
 
     //Add grid to window
     gtk_container_add(GTK_CONTAINER(w),grid);
@@ -71,8 +74,7 @@ void UserInput(GtkButton *widget, gpointer data){
     j = checkWin(HUPLAYER,openS);
     //if win print to console. if this happens email me.
     if(j == 1){
-        printf("Holy Hell you beat the AI!\n");
-        exit(0);
+        gtk_button_set_label((GtkButton *)button,"You win! reset?");
     }
     open -=1;
     if(open == 0)exit(0);
@@ -89,8 +91,16 @@ void game_loop(){
     g_signal_connect(G_OBJECT(uR), "clicked", G_CALLBACK(UserInput), NULL);
     g_signal_connect(G_OBJECT(mR), "clicked", G_CALLBACK(UserInput), NULL);
     g_signal_connect(G_OBJECT(bR), "clicked", G_CALLBACK(UserInput), NULL);
+    //g_signal_connect(G_OBJECT(bottom), "clicked", G_CALLBACK(resetG), NULL);
 
     g_signal_connect(w, "destroy", G_CALLBACK(gtk_main_quit), NULL);
 
     gtk_main();
+}
+int who_f(){
+    // simple function to decide who is first
+    int t;
+    srand(time(NULL));
+    t = rand%2;
+    return t;
 }

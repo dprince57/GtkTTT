@@ -19,6 +19,7 @@ GtkWidget *mR;
 GtkWidget *bL;
 GtkWidget *bM;
 GtkWidget *bR;
+GtkWidget *bottom;
 
 GtkWidget *w;
 const gchar *f;
@@ -26,6 +27,7 @@ const gchar *f;
 extern int openS[9];
 extern int open;
 
+int who_f();
 int checkWin(int p,int b[9]);
 void activate_GTK();
 void UserInput(GtkButton *widget, gpointer data);

@@ -30,6 +30,7 @@ int main(int argc, char *argv[]) {
     //GTK Game Loop
     gtk_init(&argc, &argv);
     activate_GTK();
+    int t = who_f();
     game_loop();
 
 }

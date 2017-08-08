@@ -27,7 +27,7 @@ void ai(){
                 break;
             }
             //if no winstate alphabeta the bestscore
-            tS = alphaBeta(open-1,openS,88);
+            tS = alphaBeta(10,openS,88);
             if(tS>bS){bMa = i;bS=tS;}
             openS[i] = i;
         }
@@ -37,17 +37,17 @@ void ai(){
     //made place AI so it doesnt loop crowded. We all know how to assign variables.
     placeAi(bMa);
     open -= 1;
+    //if no more moves tie.
     if(open == 0){
-        printf("Game over Tie!\n");
-        exit(0);
+        gtk_button_set_label((GtkButton *)button,"Tie! reset?");
     }
     j = checkWin(AIPLAYER,openS);
     //print win for ai. if this happens you should feel really bad.
     if(j == TRUE){
-        printf("HA! The AI won and you lost\n");
-        exit(0);
+        gtk_button_set_label((GtkButton *)button,"AI win! reset?");
     }
 }
+
 int alphaBeta(int depth, int board[9],int mM){
     int bV = 0;
     int j = checkWin(mM,board);
@@ -60,7 +60,9 @@ int alphaBeta(int depth, int board[9],int mM){
             return 10;
         }
     }
-    if(depth == 0)return 0;
+    if(depth == 0)
+        return 0;
+
     //If terminal state is not found we will recurse Alpha Beta until we find a winning or losing combo
     for(int i = 0;i<9;i++){
         if(board[i] != 88 && board[i] != 79) {
@@ -81,6 +83,7 @@ int alphaBeta(int depth, int board[9],int mM){
     }
     return bV;
 }
+
 void placeAi(int b){
     //Add AI token to board.
     openS[b] = 79;
