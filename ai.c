@@ -11,7 +11,8 @@ void ai(){
     int bMa;
     //Main AI for loop
     for(int i = 0;i<9;i++){
-        if(openS[i] != 88 && openS[i] != 79){
+        if(openS[i] != HUPLAYER && openS[i] != AIPLAYER){
+            printf("opens = %d.  \n",i);
             //Win check Human. If he wins block him
             openS[i] = 88;
             wC = checkWin(HUPLAYER,openS);
@@ -36,15 +37,15 @@ void ai(){
     if(bMa > 9){bMa = 0;}
     //made place AI so it doesnt loop crowded. We all know how to assign variables.
     placeAi(bMa);
-    open -= 1;
+    openp -= 1;
     //if no more moves tie.
-    if(open == 0){
-        gtk_button_set_label((GtkButton *)button,"Tie! reset?");
+    if(openp <= 0){
+        gtk_button_set_label((GtkButton *)bottom,"Tie! Reset?");
     }
     j = checkWin(AIPLAYER,openS);
     //print win for ai. if this happens you should feel really bad.
     if(j == TRUE){
-        gtk_button_set_label((GtkButton *)button,"AI win! reset?");
+        gtk_button_set_label((GtkButton *)bottom,"AI win! Reset?");
     }
 }
 

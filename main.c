@@ -23,7 +23,7 @@
 #include "game.h"
 
 int openS[9] = {1,2,3,4,5,6,7,8,9};
-int open= 9;
+int openp = 9;
 
 int main(int argc, char *argv[]) {
 
